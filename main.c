@@ -14,40 +14,35 @@ int main()
     //int array[szz] = { 0 }; // countEl = 1
     //int array[szz] = { -2147483647 - 1,-2147483647 - 1,7,3,3,2,2,1,1,2147483647 }; // countEl = 6
 
-    int max = array[0];
-    for(int i=1;i < szz;i++) // В данной задаче случай, что все элементы одинаковые, отработает нормально, так как мы все равно получаем несуществющее значение
-        if(array[i] > max) max = array[i];
-    int notExist = max+1;
-    int countEl=0;
-    if(notExist == -2147483647-1){ // Обработка исключительного случая, если max=2147483647, так как overflow
-        for(int i = 0; i < szz; i++){
-            if (array[i] == notExist){
-                countEl++;
-                i = szz;
-            }
-        }
-    }
-    for(int i=0;i < szz;i++)
-    {
-        int jx = i+1;
-        if(array[i]!= notExist)
-        {
-            while(jx < szz)
-            {
-                if(array[jx]!= notExist)
-                {
-                    if(array[i] == array[jx])
-                    {
-                        array[jx] = notExist;
 
+    bool is_non_unique[szz]; // Изменение алгоритма связано с тем, что во-первых алгоритм портит исходный массив, а во-вторых notExist = max + 1 при max == 2147483647 - переполнение. Поэтому создаем характеристический массив
+    for (int i = 0; i < szz; i++) {// 0 - если элемент пока не встречался (изначально все нули). 1 - если элемент уже присутствует в массиве
+        is_non_unique[i] = 0;
+    }
+    int countEl = 0;
+    for (int i = 0; i < szz; i++)
+    {
+        int jx = i + 1;
+        if (is_non_unique[i] == 0)// Если элемент пока не встречался 
+        {
+            while (jx < szz)
+            {
+                if (is_non_unique[jx] == 0)// Если элемент пока не встречался
+                {
+                    if (array[i] == array[jx])//Если уже есть элемент равный текущему
+                    {
+                        is_non_unique[jx] = 1;
                     }
                 }
                 jx++;
             }
             countEl++;
         }
-        else
-            array[i] = notExist;
     }
     printf("countEl = %d", countEl);
+    // Вывод элементов массива, для отладки
+    printf("\n");
+    for (int i = 0; i < szz; i++) {
+        printf("%d ", array[i]);
+    }
 }
