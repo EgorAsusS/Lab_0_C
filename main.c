@@ -10,7 +10,6 @@ int main()
     int max = array[0];
     for(int i=1;i < szz;i++)
         if(array[i] > max) max = array[i];
-    bool unique = true;
     int notExist = max+1;
     int countEl=0;
     for(int i=0;i < szz;i++)
@@ -18,7 +17,6 @@ int main()
         int jx = i+1;
         if(array[i]!= notExist)
         {
-            unique = true;
             while(jx < szz)
             {
                 if(array[jx]!= notExist)
@@ -31,11 +29,8 @@ int main()
                 }
                 jx++;
             }
-        }
-        else
-            unique = false;
-        if(unique)
             countEl++;
+        }
         else
             array[i] = notExist;
     }
