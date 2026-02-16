@@ -15,11 +15,11 @@ int main()
     //int array[szz] = { -2147483647 - 1,-2147483647 - 1,7,3,3,2,2,1,1,2147483647 }; // countEl = 6
 
     int max = array[0];
-    for(int i=1;i < szz;i++)
+    for(int i=1;i < szz;i++) // В данной задаче случай, что все элементы одинаковые, отработает нормально, так как мы все равно получаем несуществющее значение
         if(array[i] > max) max = array[i];
     int notExist = max+1;
     int countEl=0;
-    if(notExist == -2147483647-1){
+    if(notExist == -2147483647-1){ // Обработка исключительного случая, если max=2147483647, так как overflow
         for(int i = 0; i < szz; i++){
             if (array[i] == notExist){
                 countEl++;
